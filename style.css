@@ -18,15 +18,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(222, 222, 177);
+    background: rgb(238, 238, 202);
 }
 
-.cursor {
+.cursor__paint {
     position: absolute;
+    display: block;
     width: 20px;
     height: 20px;
     color: var(--active-color);
     pointer-events: none;
+}
+
+.cursor__eraser {
+    position: absolute;
+    display: none;
+    background: rgb(226, 223, 223);
+    box-shadow: 0 0 2px var(--black-color);
+    pointer-events: none;
+    border-radius: 50%;
 }
 
 .container {
@@ -43,7 +53,7 @@ body {
     justify-content: space-between;
     width: 100%;
     padding: 0 5px;
-    background: linear-gradient(to right, rgb(0, 180, 219), rgb(0, 131, 176));
+    background: rgb(0, 180, 219);
     height: 60px
 }
 
@@ -90,6 +100,11 @@ body {
     background: var(--white-color);
     color: var(--black-color);
     transform: unset;
+}
+
+#save:link {
+    color: #000;
+    text-decoration: none;
 }
 
 #tools :is(.tools__change, .tools_save-clear) > *:active {

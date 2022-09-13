@@ -7,11 +7,16 @@ const increaseBtn = document.querySelector('#increase');
 const saveBtn = document.querySelector('#save');
 const clearBtn = document.querySelector('#clear');
 const canvas = document.querySelector('canvas');
-const cursor = document.querySelector('.cursor');
+const cursorPaint = document.querySelector('.cursor__paint');
+const cursorEraser = document.querySelector('.cursor__eraser');
 // pos
 var pos1 = {x: 0, y: 0};
 var pos2 = {x: 0, y: 0};
+
+// Size default
 var sizeValue = 10;
+cursorEraser.style.width = `${sizeValue}px`;
+cursorEraser.style.height = `${sizeValue}px`;
 
 // create canvas default
 var ctx = canvas.getContext("2d");
@@ -25,20 +30,28 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 // Change size
 decreaseBtn.addEventListener('click', function() {
     sizeValue = (sizeValue > 5) ? sizeValue -= 5 : 5;
-    size.innerText = `${sizeValue}`
+    size.innerText = `${sizeValue}`;
+    cursorEraser.style.width = `${sizeValue}px`;
+    cursorEraser.style.height = `${sizeValue}px`;
 })
 
 increaseBtn.addEventListener('click', function() {
-    sizeValue = (sizeValue < 30) ? sizeValue += 5 : 30;
-    size.innerText = `${sizeValue}`
+    sizeValue = (sizeValue < 100) ? sizeValue += 5 : 100;
+    size.innerText = `${sizeValue}`;
+    cursorEraser.style.width = `${sizeValue}px`;
+    cursorEraser.style.height = `${sizeValue}px`;
 })
 
-// Erases
+// Eraser
 eraserBtn.addEventListener('click', function() {
     eraserBtn.classList.toggle('active');
-    if( eraserBtn.classList.contains('active')) {
+    if(eraserBtn.classList.contains('active')) {
         colorPaint = '#fff';
+        cursorPaint.style.display = 'none';
+        cursorEraser.style.display = 'block';
     } else {
+        cursorPaint.style.display = 'block';
+        cursorEraser.style.display = 'none';
         colorPaint = '#000000';
     }
 })
@@ -53,24 +66,30 @@ canvas.addEventListener('mousedown', function(e) {
 
 colorBtn.addEventListener('change', function(e) {
     eraserBtn.classList.remove('active');
+    cursorPaint.style.display = 'block';
+    cursorEraser.style.display = 'none';
     colorPaint = e.target.value;
 })
 
 canvas.addEventListener('mousemove', function(e) {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = `${e.clientY - 15}px`;
-    console.log(e.clientX)
+    // cursor painting
+    cursorPaint.style.left = `${e.clientX}px`;
+    cursorPaint.style.top = `${e.clientY - 15}px`;
+
+    // cursor erasering
+    cursorEraser.style.left = `${e.clientX - sizeValue/2}px`;
+    cursorEraser.style.top = `${e.clientY - sizeValue/2}px`;
    if(isDrawing) {
     pos2.x = e.offsetX;
     pos2.y = e.offsetY;
 
-    // Drawing line
+    // Drawing circle
     ctx.beginPath();
     ctx.arc(pos1.x, pos1.y, sizeValue/2, 0, 2 * Math.PI);
     ctx.fillStyle = colorPaint;
     ctx.fill();
 
-    // Drawing circle
+    // Drawing line
     ctx.beginPath();
     ctx.moveTo(pos1.x, pos1.y);
     ctx.lineTo(pos2.x, pos2.y);
