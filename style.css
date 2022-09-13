@@ -1,0 +1,114 @@
+:root {
+    --white-color: #fff;
+    --black-color: #000;
+    --active-color: rgb(209, 33, 33);
+    --primary-color: rgb(61, 141, 226);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    height: 100vh;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(222, 222, 177);
+}
+
+.cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    color: var(--active-color);
+    pointer-events: none;
+}
+
+.container {
+    width: 1400px;
+    height: 700px;
+    box-shadow: 0 0 5px var(--black-color);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 5px;
+    background: linear-gradient(to right, rgb(0, 180, 219), rgb(0, 131, 176));
+    height: 60px
+}
+
+#tools :is(.tools__change, .tools_save-clear) > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    background: var(--white-color);
+    font-size: 18px;
+    margin: 5px;
+    width: 45px;
+    height: 45px;
+    transition: all 0.1s linear;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+:is(.tools__change, .tools_save-clear, .tools__name) {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.tools_save-clear {
+    justify-content: flex-end;
+}
+
+.tools__name {
+    justify-content: center;
+    user-select: none;
+}
+
+.tools__name span {
+    color: var(--active-color);
+    font-size: 40px;
+    font-weight: 700;
+    text-shadow: 1px 1px var(--black-color);
+}
+
+#tools #size:active {
+    background: var(--white-color);
+    color: var(--black-color);
+    transform: unset;
+}
+
+#tools :is(.tools__change, .tools_save-clear) > *:active {
+    transform: scale(0.9);
+    background-color: var(--active-color);
+    color: var(--white-color);
+}
+
+#eraser.active {
+    background-color: var(--active-color);
+    color: var(--white-color);
+    transform: scale(0.9);
+}
+
+#save {
+    margin-left: auto;
+}
+
+#canvas {
+    background-color: var(--white-color);
+    cursor: none
+}
